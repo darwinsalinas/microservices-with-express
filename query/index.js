@@ -52,12 +52,18 @@ app.post('/events', (req, res) => {
 
 
 app.listen(4002, async () => {
-    console.log('Server is running on port 4002')
 
-    const resp = await axios.get('http://localhost:5000/events')
+    console.log('Server is running on http://localhost:4002')
 
-    const events = resp.data
-    for (let event of events) {
-        handleEvent(event.type, event.data)
+    try {
+        const resp = await axios.get('http://localhost:5000/events')
+        const events = resp.data
+        for (let event of events) {
+            handleEvent(event.type, event.data)
+        }
+    } catch {
+        console.log('erro en el event bus')
     }
+
+
 })
